@@ -13,17 +13,19 @@ __all__ = ['GhostdownInput', 'GHOSTDOWN_INPUT_TEMPLATE_STRING']
 
 
 class GhostdownInput(widgets.HiddenInput):
-
-    template = get_template_from_string(GHOSTDOWN_INPUT_TEMPLATE_STRING)
-
-    def __init__(self, attrs=None, value_key=''):
+    def __init__(self, attrs=None, resolve_value=None):
         super(GhostdownInput, self).__init__(attrs)
-        self.value_key = value_key
+        if resolve_value:
+            self.resolve_value = resolve_value
+
+    def resolve_value(self, value):
+        return value
+
+    def get_template(self):
+        return get_template_from_string(GHOSTDOWN_INPUT_TEMPLATE_STRING)
 
     def render(self, name, value, attrs=None):
-        if self.value_key:
-            for key in self.value_key.split('.'):
-                value = getattr(value, key)
+        value = self.resolve_value(value)
         original = super(GhostdownInput, self).render(name, value, attrs)
         original_id = attrs['id']
         ghostdown_id = '{0}_ghosteditor_markdown'.format(original_id)
@@ -33,7 +35,7 @@ class GhostdownInput(widgets.HiddenInput):
             'ghostdown_id': ghostdown_id,
             'content': value or '',
         })
-        return self.template.render(context)
+        return self.get_template().render(context)
 
     @property
     def media(self):
