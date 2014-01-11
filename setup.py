@@ -17,7 +17,7 @@ version = import_module('ghostdown').__version__
 
 for dirpath, dirnames, filenames in os.walk('ghostdown'):
     if '__init__.py' in filenames:
-        packages.append('.'.join(dirpath.split('/')))
+        packages.append('.'.join(dirpath.split('/')).encode('utf-8'))
 
 
 setup(
