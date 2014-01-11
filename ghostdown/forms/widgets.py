@@ -19,7 +19,7 @@ class GhostdownInput(widgets.HiddenInput):
     def render(self, name, value, attrs=None):
         if self.value_key:
             for key in self.value_key.split('.'):
-                value = getattr(key, value)
+                value = getattr(value, key)
         original = super(GhostdownInput, self).render(name, value, attrs)
         original_id = attrs['id']
         ghostdown_id = '{0}_ghosteditor_markdown'.format(original_id)
