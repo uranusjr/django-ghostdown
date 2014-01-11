@@ -1,0 +1,29 @@
+{% load i18n %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<title>{% trans 'Test form' %}</title>
+{{ form.media }}
+<style>
+.features {
+  height: 500px;
+}
+</style>
+
+</head>
+
+<body>
+
+<form method="post" action="">
+  {% csrf_token %}
+  {{ form }}
+  <button type="submit">{% trans 'Submit' %}</button>
+</form>
+
+</body>
+
+</html>
