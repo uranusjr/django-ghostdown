@@ -11,13 +11,18 @@ os.chdir(os.path.dirname(__file__))
 
 
 long_description = open('README.rst').read()
-packages = []
 version = import_module('ghostdown').__version__
 
-
+# Find packages to install.
+packages = []
 for dirpath, dirnames, filenames in os.walk('ghostdown'):
     if '__init__.py' in filenames:
         packages.append('.'.join(dirpath.split('/')).encode('utf-8'))
+
+
+# Load requirements from requirement file.
+with open('requirements/project.txt') as f:
+    install_requires = [p for p in f.readlines() if p]
 
 
 setup(
@@ -28,7 +33,7 @@ setup(
     description='Ghost-like markdown editor as a Django form widget.',
     long_description=long_description,
     version=version,
-    install_requires=['django'],
+    install_requires=install_requires,
     license='MIT License',
     packages=packages,
     include_package_data=True,
