@@ -19,7 +19,6 @@ for dirpath, dirnames, filenames in os.walk('ghostdown'):
     if '__init__.py' in filenames:
         packages.append('.'.join(dirpath.split('/')).encode('utf-8'))
 
-
 # Load requirements from requirement file.
 with open('requirements/project.txt') as f:
     install_requires = [p for p in f.readlines() if p]
