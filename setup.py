@@ -7,7 +7,7 @@ from importlib import import_module
 from setuptools import setup
 
 
-os.chdir(os.path.dirname(__file__))
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
 long_description = open('README.rst').read()
