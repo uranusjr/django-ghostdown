@@ -1,10 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render
-from .forms import TestForm
+from django.views.generic import FormView, TemplateView
+from .forms import BasicForm, PreviewForm
 
 
-def index(request):
-    form = TestForm()
-    return render(request, 'index.html', {'form': form})
+class IndexView(TemplateView):
+    template_name = 'index.html'
+
+
+class BasicFormView(FormView):
+    form_class = BasicForm
+    template_name = 'form.html'
+
+
+class PreviewFormView(FormView):
+    form_class = PreviewForm
+    template_name = 'form.html'
+
+
+index = IndexView.as_view()
+basic = BasicFormView.as_view()
+preview = PreviewFormView.as_view()

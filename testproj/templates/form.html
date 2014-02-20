@@ -1,0 +1,24 @@
+{% load i18n staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<title>{% trans 'Test form' %}</title>
+{{ form.media }}
+<link rel="stylesheet" type="text/css" href="{% static 'form.css' %}">
+</head>
+
+<body>
+
+<form method="post" action="" class="ghostdown-form">
+  {% csrf_token %}
+  <div class="form-body">{{ form }}</div>
+  <button type="submit">{% trans 'Submit' %}</button>
+</form>
+
+</body>
+
+</html>

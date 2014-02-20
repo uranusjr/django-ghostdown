@@ -6,18 +6,19 @@
 <head>
 
 <meta charset="utf-8">
-<title>{% trans 'Test form' %}</title>
+<title>{% trans 'Test index' %}</title>
 {{ form.media }}
-<link rel="stylesheet" type="text/css" href="{% static 'index.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'form.css' %}">
 </head>
 
 <body>
 
-<form method="post" action="" class="ghostdown-form">
-  {% csrf_token %}
-  <div class="form-body">{{ form }}</div>
-  <button type="submit">{% trans 'Submit' %}</button>
-</form>
+<h1>{% trans 'Choose a form to test:' %}</h1>
+
+<ul>
+  <li><a href="{% url 'basic' %}">{% trans 'Vanilla input' %}</a></li>
+  <li><a href="{% url 'preview' %}">{% trans 'Input with live preview' %}</a></li>
+</ul>
 
 </body>
 

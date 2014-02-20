@@ -5,5 +5,9 @@ from django import forms
 from ghostdown.forms.widgets import GhostdownInput
 
 
-class TestForm(forms.Form):
+class BasicForm(forms.Form):
     content = forms.CharField(widget=GhostdownInput)
+
+
+class PreviewForm(forms.Form):
+    content = forms.CharField(widget=GhostdownInput(live_preview=True))
