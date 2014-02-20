@@ -18,21 +18,9 @@ GHOSTDOWN_INPUT_TEMPLATE_STRING = """
   {{ original|safe }}
 </div>
 <script>
-(function ($, CodeMirror) {
-  'use strict';
-  $(document).ready(function () {
-    var ghostdownTextArea = document.getElementById('{{ ghostdown_id }}');
-    if (!ghostdownTextArea)
-      return;
-    var editor = CodeMirror.fromTextArea(ghostdownTextArea, {
-      'mode': 'markdown',
-      'tabMode': 'indent',
-      'lineWrapping': true
-    });
-    editor.on("change", function () {
-      $('#{{ original_id }}').val(editor.getValue());
-    });
-  });
-}(jQuery, CodeMirror));
+var Ghostdown = {
+  ghostdownId: '{{ ghostdown_id }}',
+  originalId: '{{ original_id }}'
+};
 </script>
 """

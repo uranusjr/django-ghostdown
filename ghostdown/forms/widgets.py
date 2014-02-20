@@ -49,5 +49,6 @@ class GhostdownInput(widgets.HiddenInput):
             settings.GHOSTDOWN_JQUERY_URL,
             settings.GHOSTDOWN_CODEMIRROR_JS_URL,
             settings.GHOSTDOWN_CODEMIRROR_MARKDOWN_JS_URL,
+            'ghostdown/js/ghostdown.js'
         )
         return Media(css=css, js=[p for p in js if p])
