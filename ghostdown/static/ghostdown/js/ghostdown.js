@@ -1,6 +1,9 @@
 (function ($, CodeMirror, ShowDown) {
   'use strict';
   $(document).ready(function () {
+
+    if (typeof(Ghostdown) === 'undefined')
+      return;
     var ghostdownTextArea = document.getElementById(Ghostdown.ghostdownId);
     if (!ghostdownTextArea)
       return;
