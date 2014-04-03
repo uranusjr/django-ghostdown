@@ -32,7 +32,8 @@ var Ghostdown = {
   featureId: '{{ ghostdown_feature_id }}',
   ghostdownId: '{{ ghostdown_id }}',
   originalId: '{{ original_id }}',
-  hasLivePreview: {{ live_preview|yesno:'true,false' }}
+  hasLivePreview: {{ live_preview|yesno:'true,false' }},
+  cmMode: {{ codemirror_mode }}
 };
 </script>
 """

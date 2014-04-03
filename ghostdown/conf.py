@@ -35,5 +35,6 @@ class GhostdownConf(AppConf):
     JQUERY_URL = _get_setting('JQUERY_URL')
     CODEMIRROR_JS_URL = _get_setting('CODEMIRROR_JS_URL')
     CODEMIRROR_MARKDOWN_JS_URL = _get_setting('CODEMIRROR_MARKDOWN_JS_URL')
+    CODEMIRROR_DEFAULT_MODE = 'markdown'
     SHOWDOWN_JS_URL = _get_setting('SHOWDOWN_JS_URL')
     USE_LIVE_PREVIEW = False

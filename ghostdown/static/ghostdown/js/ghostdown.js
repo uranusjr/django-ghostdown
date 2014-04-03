@@ -6,7 +6,7 @@
       return;
     var feature = document.getElementById(Ghostdown.featureId);
     var editor = CodeMirror.fromTextArea(ghostdownTextArea, {
-      'mode': 'markdown',
+      'mode': Ghostdown.cmMode,
       'tabMode': 'indent',
       'lineWrapping': true
     });

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
+import json
 from django.forms import widgets, Media
 from django.template import Context
 from django.template.loader import get_template_from_string
@@ -13,7 +14,8 @@ __all__ = ['GhostdownInput', 'GHOSTDOWN_INPUT_TEMPLATE_STRING']
 
 
 class GhostdownInput(widgets.HiddenInput):
-    def __init__(self, attrs=None, live_preview=None, value_path=''):
+    def __init__(self, attrs=None, live_preview=None, value_path='',
+                 codemirror_mode=None):
         super(GhostdownInput, self).__init__(attrs)
         if live_preview is None:
             self.live_preview = settings.GHOSTDOWN_USE_LIVE_PREVIEW
@@ -21,6 +23,7 @@ class GhostdownInput(widgets.HiddenInput):
             self.live_preview = live_preview
         if value_path:
             self.value_path = value_path
+        self.codemirror_mode = codemirror_mode or {}
 
     def get_template(self):
         return get_template_from_string(GHOSTDOWN_INPUT_TEMPLATE_STRING)
@@ -35,6 +38,9 @@ class GhostdownInput(widgets.HiddenInput):
         original_id = attrs['id']
         ghostdown_feature_id = '{0}_ghosteditor_feature'.format(original_id)
         ghostdown_id = '{0}_ghosteditor_markdown'.format(original_id)
+        cm_mode = self.codemirror_mode
+        if 'name' not in cm_mode:
+            cm_mode['name'] = settings.GHOSTDOWN_CODEMIRROR_DEFAULT_MODE
         context = Context({
             'original': original,
             'original_id': original_id,
@@ -42,6 +48,7 @@ class GhostdownInput(widgets.HiddenInput):
             'ghostdown_id': ghostdown_id,
             'content': value or '',
             'live_preview': self.live_preview,
+            'codemirror_mode': json.dumps(cm_mode),
         })
         return self.get_template().render(context)
 
