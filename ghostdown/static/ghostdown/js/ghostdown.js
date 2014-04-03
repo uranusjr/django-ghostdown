@@ -5,11 +5,9 @@
     if (!ghostdownTextArea)
       return;
     var feature = document.getElementById(Ghostdown.featureId);
-    var editor = CodeMirror.fromTextArea(ghostdownTextArea, {
-      'mode': Ghostdown.cmMode,
-      'tabMode': 'indent',
-      'lineWrapping': true
-    });
+    var editor = CodeMirror.fromTextArea(
+      ghostdownTextArea, Ghostdown.cmOptions
+    );
 
     function updateWordCount() {
       if (!Ghostdown.hasLivePreview)

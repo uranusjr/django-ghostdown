@@ -33,7 +33,7 @@ var Ghostdown = {
   ghostdownId: '{{ ghostdown_id }}',
   originalId: '{{ original_id }}',
   hasLivePreview: {{ live_preview|yesno:'true,false' }},
-  cmMode: {{ codemirror_mode }}
+  cmOptions: {{ codemirror_options|safe }}
 };
 </script>
 """
