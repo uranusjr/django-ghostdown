@@ -90,3 +90,20 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+GHOSTDOWN_MARKDOWN_RENDERER = {
+    'path': 'markdown.markdown',
+    'args': (),
+    'kwargs': {
+        'lazy_ol': False,
+        'output_format': 'html5',
+        'extensions': [
+            'codehilite',
+            'fenced_code',
+            'footnotes',
+            'smarty',
+            'smart_strong',
+            'tables',
+        ],
+    },
+}

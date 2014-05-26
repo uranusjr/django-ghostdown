@@ -42,3 +42,8 @@ class GhostdownConf(AppConf):
     }
     SHOWDOWN_JS_URL = _get_setting('SHOWDOWN_JS_URL')
     USE_LIVE_PREVIEW = False
+    MARKDOWN_RENDERER = {
+        'path': None,
+        'args': (),
+        'kwargs': {},
+    }

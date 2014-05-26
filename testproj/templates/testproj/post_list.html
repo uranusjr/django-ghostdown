@@ -1,0 +1,43 @@
+{% load i18n staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<title>{% trans 'Test index' %}</title>
+{{ form.media }}
+<link rel="stylesheet" type="text/css" href="{% static 'post.css' %}">
+</head>
+
+<body>
+
+<h1>
+  {% url 'post_create' as post_create %}
+  {% blocktrans with post_create=post_create %}
+  Choose a Post to update, or <a href="{{ post_create }}">create another</a>.
+  {% endblocktrans %}
+</h1>
+
+<table>
+<thead>
+  <tr><th>{% trans 'Content' %}</th><th>{% trans 'Functions' %}</th>
+</thead>
+<tbody>
+{% for object in object_list %}
+<tr>
+  <td>
+    {{ object.content }}
+  </td>
+  <td>
+    <a href="{% url 'post_update' pk=object.pk %}">{% trans 'Update' %}</a>
+  </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+</body>
+
+</html>

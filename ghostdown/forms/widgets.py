@@ -3,26 +3,50 @@
 
 from __future__ import unicode_literals
 import json
+from django.conf import settings
 from django.forms import widgets, Media
 from django.template import Context
 from django.template.loader import get_template_from_string
-from ghostdown.conf import settings
 from .templates import GHOSTDOWN_INPUT_TEMPLATE_STRING
 
 
-__all__ = ['GhostdownInput', 'GHOSTDOWN_INPUT_TEMPLATE_STRING']
+__all__ = [
+    'GhostdownInput', 'GhostdownHiddenInput',
+    'GHOSTDOWN_INPUT_TEMPLATE_STRING',
+]
 
 
-class GhostdownInput(widgets.HiddenInput):
+class GhostdownWidgetMixin(widgets.Widget):
+    def __init__(self, attrs=None, value_path=''):
+        super(GhostdownWidgetMixin, self).__init__(attrs)
+        if value_path:
+            self.value_path = value_path
+
+    def resolve_value(self, value):
+        try:
+            for k in self.value_path.split('.'):
+                value = getattr(value, k)
+        except AttributeError:
+            pass
+        return value
+
+    def render(self, name, value, attrs=None):
+        value = self.resolve_value(value)
+        return super(GhostdownWidgetMixin, self).render(name, value, attrs)
+
+
+class GhostdownHiddenInput(GhostdownWidgetMixin, widgets.HiddenInput):
+    pass
+
+
+class GhostdownInput(GhostdownHiddenInput):
     def __init__(self, attrs=None, live_preview=None, value_path='',
                  codemirror_options=None):
-        super(GhostdownInput, self).__init__(attrs)
+        super(GhostdownInput, self).__init__(attrs, value_path)
         if live_preview is None:
             self.live_preview = settings.GHOSTDOWN_USE_LIVE_PREVIEW
         else:
             self.live_preview = live_preview
-        if value_path:
-            self.value_path = value_path
         if codemirror_options is None:
             codemirror_options = settings.GHOSTDOWN_CODEMIRROR_DEFAULT_OPTIONS
         self.codemirror_options = codemirror_options
@@ -31,11 +55,7 @@ class GhostdownInput(widgets.HiddenInput):
         return get_template_from_string(GHOSTDOWN_INPUT_TEMPLATE_STRING)
 
     def render(self, name, value, attrs=None):
-        try:
-            for k in self.value_path.split('.'):
-                value = getattr(value, k)
-        except AttributeError:
-            pass
+        value = self.resolve_value(value)
         original = super(GhostdownInput, self).render(name, value, attrs)
         original_id = attrs['id']
         ghostdown_feature_id = '{0}_ghosteditor_feature'.format(original_id)
