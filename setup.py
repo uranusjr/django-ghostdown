@@ -4,7 +4,7 @@
 from __future__ import unicode_literals
 import os
 from importlib import import_module
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -12,12 +12,6 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 long_description = open('README.rst').read()
 version = import_module('ghostdown').__version__
-
-# Find packages to install.
-packages = []
-for dirpath, dirnames, filenames in os.walk('ghostdown'):
-    if '__init__.py' in filenames:
-        packages.append('.'.join(dirpath.split('/')).encode('utf-8'))
 
 # Load requirements from requirement file.
 with open('requirements/project.txt') as f:
@@ -34,7 +28,7 @@ setup(
     version=version,
     install_requires=install_requires,
     license='MIT License',
-    packages=packages,
+    packages=find_packages(),
     include_package_data=True,
     classifiers=[
         'Environment :: Web Environment',
