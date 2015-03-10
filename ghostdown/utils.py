@@ -2,8 +2,15 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
-from importlib import import_module
 from django.utils.functional import curry
+try:
+    # Django 1.7 and onwards.
+    from django.utils.module_loading import import_string
+except ImportError:
+    # Older version of Django. This is deprecated now, and you should upgrade
+    # Django asap!
+    from django.utils.module_loading import import_by_path
+    import_string = import_by_path
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
@@ -15,13 +22,5 @@ def get_render_func():
             'Could not import markdown renderer. "path" value missing from '
             'settings.'
         )
-    try:
-        modulename, funcname = renderer_info['path'].rsplit('.')
-        func = getattr(import_module(modulename), funcname)
-    except:
-        raise ImproperlyConfigured(
-            'Could not import markdown renderer "{path}". Setting '
-            '"GHOSTDOWN_MARKDOWN_RENDERER" should be a dot-seperated import '
-            'path to a function.'.format(path=renderer_info['path'])
-        )
+    func = import_string(renderer_info['path'])
     return curry(func, *renderer_info['args'], **renderer_info['kwargs'])
