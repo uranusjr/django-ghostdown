@@ -10,16 +10,23 @@ from .models import Post
 from .forms import BasicForm, PreviewForm
 
 
+class GhostDownFormView(FormView):
+    def get_success_url(self):
+        if self.success_url is None:
+            self.success_url = self.request.path
+        return super(GhostDownFormView, self).get_success_url()
+
+
 class IndexView(TemplateView):
     template_name = 'index.html'
 
 
-class BasicFormView(FormView):
+class BasicFormView(GhostDownFormView):
     form_class = BasicForm
     template_name = 'form.html'
 
 
-class PreviewFormView(FormView):
+class PreviewFormView(GhostDownFormView):
     form_class = PreviewForm
     template_name = 'form.html'
 

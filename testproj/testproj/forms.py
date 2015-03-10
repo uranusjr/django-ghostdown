@@ -6,8 +6,11 @@ from ghostdown.forms.widgets import GhostdownInput
 
 
 class BasicForm(forms.Form):
-    content = forms.CharField(widget=GhostdownInput)
+    content = forms.CharField(required=False, widget=GhostdownInput)
 
 
 class PreviewForm(forms.Form):
-    content = forms.CharField(widget=GhostdownInput(live_preview=True))
+    content = forms.CharField(
+        required=False,
+        widget=GhostdownInput(live_preview=True)
+    )
