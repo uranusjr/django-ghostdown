@@ -3,10 +3,12 @@
 
 from __future__ import unicode_literals
 import json
+
 from django.conf import settings
 from django.forms import widgets, Media
 from django.template import Context
-from django.template.loader import get_template_from_string
+
+from ..compat import get_template_from_string
 from .templates import GHOSTDOWN_INPUT_TEMPLATE_STRING
 
 
